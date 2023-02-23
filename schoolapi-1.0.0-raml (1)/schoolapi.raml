@@ -1,0 +1,82 @@
+#%RAML 1.0
+title: schoolAPI
+version: v1
+mediaType: 
+- application/json
+description: Specification used to create student and teacher data
+protocols:
+  - HTTPS
+baseUri: http://www.dummymule.com/school
+types:
+  student: !include exchange_modules/14a3cfa6-fc87-4b74-8deb-99658e50b495/studentdatatype/1.0.1/studentdatatype.raml
+  teacher: !include exchange_modules/14a3cfa6-fc87-4b74-8deb-99658e50b495/teacherdatatype/1.0.0/teacherdatatype.raml
+
+/student:
+  get:
+    queryParameters:
+      firstName:
+        required: true
+        type: string
+        description: First name of the student
+        
+      lastName:
+        required: true
+        type: string
+        description: last Name of the Student
+        
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include /Examples/studentExample.raml
+  post:
+    body:
+      application/json:
+        type: student
+        example: !include /Examples/studentExample.raml
+    responses:
+      201:
+        body:
+          application/json:
+            example: 
+              {"message":"Success"}
+  /{RollNumber}:
+    get:
+      responses:
+        201:
+          body:
+            application/json:
+              example:
+                
+  /teacher:
+    get:
+      queryParameters:
+        firstName:
+          required: true
+          description: firstName of Teacher
+          type: string
+        lastName:
+          required: true
+          description: lastName of the Teacher
+          type: string
+      responses:
+        200:
+          body:
+            application/json:
+              example: !include Examples/teacherExample.raml
+    post:
+     body:
+      application/json:
+        type: teacher
+        example: !include Examples/teacherExample.raml
+     responses:
+      201:
+        body:
+          application/json:
+            example: 
+                  {"message": "Success"}
+
+ 
+
+  
+        
